@@ -1,2 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <declare-styleable name="PressureMap">
+        <attr name="pTL" format="float" />
+        <attr name="pTR" format="float" />
+        <attr name="pMM" format="float" />
+        <attr name="pBL" format="float" />
+        <attr name="pBR" format="float" />
+    </declare-styleable>
+</resources>

@@ -16,10 +16,14 @@ import h3o.smartseat.R;
  */
 public class PressureMap extends View {
 
-    public PressureMap(Context context)
-    {
-        super(context);
-    }
+    private int pTL = 0;
+    private int pTR = 0;
+    private int pMM = 0;
+    private int pBL = 0;
+    private int pBR = 0;
+    private int temp = 2;
+
+    public PressureMap(Context context) { super(context); }
     public PressureMap(Context context, AttributeSet attrs)
     {
         super(context, attrs);
@@ -44,12 +48,23 @@ public class PressureMap extends View {
 //        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.chair);
 //        canvas.drawBitmap(b, 0, 0, p);
         // Use Color.parseColor to define HTML colors
-        paint.setColor(Color.parseColor("#CD5C5C")*2);
+        paint.setColor(Color.parseColor("#CD5C5C")*temp);
 
         canvas.drawCircle(x / 4, y / 4, radius, paint);
         canvas.drawCircle(3*x / 4, 3*y / 4, radius, paint);
         canvas.drawCircle(3*x / 4, y / 4, radius, paint);
         canvas.drawCircle(x / 4, 3*y / 4, radius, paint);
         canvas.drawCircle(x / 2, y / 2, radius, paint);
+    }
+
+    public void setPressure(int nTL, int nTR, int nMM, int nBL, int nBR){
+        pTL = nTL;
+        pTR = nTR;
+        pMM = nMM;
+        pBL = nBL;
+        pBR = nBR;
+        temp = temp*2;
+        invalidate();
+        requestLayout();
     }
 }

@@ -4,6 +4,7 @@ package h3o.smartseat;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +18,10 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 
 /**
@@ -163,10 +168,53 @@ public class Record extends Fragment {
                 }
             }
         });
+
+        Button btn = (Button) getView().findViewById(R.id.test_btn);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isExternalStorageWritable()) {
+                    try {
+                        File root = new File(Environment.
+                                getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+                                "Smart Chair");
+                        if (!root.exists()) {
+                            root.mkdirs();
+                        }
+                        File file = new File(root, "Chair Data.txt");
+                        FileWriter writer = new FileWriter(file);
+                        writer.append("test");
+                        writer.close();
+                        Log.d("Error:", "here");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Log.d("Error:", "failed");
+                    }
+                }
+            }
+        });
     }
 
     public void updateChairData(boolean r, double[] data) {
         running = r;
         chairData = data;
+    }
+
+    public boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            return true;
+        }
+        return false;
+    }
+
+    public File getFileStorageDir(String fileName) {
+        // Get the directory for the user's public pictures directory.
+        File file = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_DOCUMENTS), fileName);
+        if (!file.mkdirs()) {
+            Log.e("Record Error", "Directory not created");
+        }
+        return file;
     }
 }

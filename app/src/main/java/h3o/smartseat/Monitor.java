@@ -10,6 +10,9 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
+import h3o.smartseat.Monitor_Layout.PressureMap;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,5 +45,17 @@ public class Monitor extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_monitor, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        Button btn = (Button) getView().findViewById(R.id.textView);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PressureMap pm = (PressureMap) getView().findViewById(R.id.record_pressure_map);
+                pm.setPressure(1, 1, 1, 1, 1);
+            }
+        });
     }
 }
